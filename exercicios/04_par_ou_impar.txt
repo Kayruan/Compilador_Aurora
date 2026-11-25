@@ -1,0 +1,38 @@
+/*
+ * EXERCÍCIO 04 - Par ou ímpar
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Para cada número de 1 a 6, diga se ele é par ou ímpar.
+ *   No final, mostre quantos números pares foram encontrados.
+ *
+ * Conceitos: repetição "para", operador % (resto da divisão),
+ *            se / senao e um contador.
+ */
+
+programa ParOuImpar {
+    inicio {
+        seja n: inteiro;                 // variável de controle do "para"
+        seja pares: inteiro = 0;         // contador começa em zero
+
+        para n de 1 ate 6 {
+            // um número é par quando o resto da divisão por 2 é zero
+            se (n % 2 == 0) {
+                escreva(n, "e par");
+                pares = pares + 1;       // conta mais um par
+            } senao {
+                escreva(n, "e impar");
+            }
+        }
+
+        escreva("Total de pares:", pares);
+    }
+}
+
+// SAIDA ESPERADA:
+// > 1 e impar
+// > 2 e par
+// > 3 e impar
+// > 4 e par
+// > 5 e impar
+// > 6 e par
+// > Total de pares: 3

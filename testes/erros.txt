@@ -1,0 +1,210 @@
+/*
+ * ============================================================================
+ *  erros.txt - Programas com erros propositais
+ * ============================================================================
+ *
+ *  Cada caso começa com a linha  "### <nome>"  e é um programa Aurora
+ *  completo. A primeira linha de cada caso diz qual mensagem o compilador
+ *  deve mostrar:  "// espera: <mensagem>".
+ *
+ *  O script de testes separa os casos e executa um por vez, conferindo que
+ *  o programa falha com a mensagem esperada. Os números de linha das
+ *  mensagens contam a partir da linha "// espera:" (linha 1 de cada caso).
+ *
+ *  Há casos para as quatro fases: léxica, sintática, semântica e execução.
+ */
+
+### lexico_comentario_aberto
+// espera: Erro lexico na linha 4: comentario de bloco aberto
+programa Teste {
+    inicio {
+        /* este comentario nunca e fechado
+        escreva("oi");
+    }
+}
+
+### lexico_simbolo
+// espera: Erro lexico na linha 5: simbolo invalido '@'
+// O caractere @ nao faz parte da linguagem.
+programa Teste {
+    inicio {
+        seja x: inteiro = 10 @ 2;
+    }
+}
+
+### lexico_texto_aberto
+// espera: Erro lexico na linha 4: texto aberto
+programa Teste {
+    inicio {
+        escreva("texto sem fechar);
+    }
+}
+
+### sintatico_comparacao_encadeada
+// espera: Erro sintatico na linha 5: encontrado '<'
+// Comparacoes nao podem ser encadeadas (operadores declarados com %nonassoc).
+programa Teste {
+    inicio {
+        seja ok: logico = 1 < 2 < 3;
+    }
+}
+
+### sintatico_ponto_virgula
+// espera: Erro sintatico na linha 6: encontrado 'escreva', mas era esperado ';'
+// Falta o ';' no fim da declaracao da linha 5.
+programa Teste {
+    inicio {
+        seja x: inteiro = 10
+        escreva(x);
+    }
+}
+
+### sintatico_sem_inicio
+// espera: Erro sintatico na linha 7: encontrado '}', mas era esperado 'inicio' ou 'funcao'
+// Todo programa precisa do bloco principal "inicio".
+programa Teste {
+    funcao dobro(n: inteiro): inteiro {
+        retorne n * 2;
+    }
+}
+
+### semantico_argumentos
+// espera: Erro semantico na linha 7: a funcao 'soma' espera 2 argumento(s), mas recebeu 1
+programa Teste {
+    funcao soma(a: inteiro, b: inteiro): inteiro {
+        retorne a + b;
+    }
+    inicio {
+        escreva(soma(1));
+    }
+}
+
+### semantico_condicao
+// espera: Erro semantico na linha 5: a condicao do 'se' deve ser logica, mas e inteiro
+programa Teste {
+    inicio {
+        seja x: inteiro = 1;
+        se (x) {
+            escreva("x");
+        }
+    }
+}
+
+### semantico_escopo
+// espera: Erro semantico na linha 8: a variavel 'dentro' nao foi declarada
+// Uma variavel declarada dentro de um bloco deixa de existir ao fechar o bloco.
+programa Teste {
+    inicio {
+        se (verdadeiro) {
+            seja dentro: inteiro = 1;
+        }
+        escreva(dentro);
+    }
+}
+
+### semantico_funcao_vazia
+// espera: Erro semantico na linha 7: a funcao 'saudar' nao devolve valor
+programa Teste {
+    funcao saudar() {
+        escreva("ola");
+    }
+    inicio {
+        seja x: inteiro = saudar();
+    }
+}
+
+### semantico_nao_declarada
+// espera: Erro semantico na linha 5: a variavel 'total' nao foi declarada
+programa Teste {
+    inicio {
+        seja x: inteiro = 1;
+        total = x + 1;
+    }
+}
+
+### semantico_operador_texto
+// espera: Erro semantico na linha 5: o operador '+' so aceita numeros (recebeu texto e inteiro)
+programa Teste {
+    inicio {
+        seja nome: texto = "Ana";
+        seja r: inteiro = nome + 1;
+    }
+}
+
+### semantico_redeclaracao
+// espera: Erro semantico na linha 5: a variavel 'x' ja foi declarada na linha 4
+programa Teste {
+    inicio {
+        seja x: inteiro = 1;
+        seja x: real = 2.0;
+    }
+}
+
+### semantico_retorno
+// espera: Erro semantico na linha 4: valor de retorno: esperado tipo inteiro, mas foi encontrado logico
+programa Teste {
+    funcao quantidade(): inteiro {
+        retorne verdadeiro;
+    }
+    inicio {
+        escreva(quantidade());
+    }
+}
+
+### semantico_tipo_argumento
+// espera: Erro semantico na linha 7: argumento 1 da funcao 'dobro': esperado tipo inteiro, mas foi encontrado texto
+programa Teste {
+    funcao dobro(n: inteiro): inteiro {
+        retorne n * 2;
+    }
+    inicio {
+        escreva(dobro("dez"));
+    }
+}
+
+### semantico_tipo_atribuicao
+// espera: Erro semantico na linha 6: atribuicao: esperado tipo inteiro, mas foi encontrado real
+// Um real nao pode ser guardado em uma variavel inteira (perderia as casas decimais).
+programa Teste {
+    inicio {
+        seja x: inteiro = 1;
+        x = 2.5;
+    }
+}
+
+### execucao_divisao_zero
+// espera: Erro de execucao na linha 6: divisao por zero
+programa Teste {
+    inicio {
+        seja a: inteiro = 10;
+        seja b: inteiro = a - 10;
+        escreva(a / b);
+    }
+}
+
+### execucao_recursao_infinita
+// espera: Erro de execucao na linha 4: recursao muito profunda na funcao 'infinita'
+programa Teste {
+    funcao infinita(n: inteiro): inteiro {
+        retorne infinita(n + 1);
+    }
+    inicio {
+        escreva(infinita(0));
+    }
+}
+
+### execucao_sem_retorne
+// espera: Erro de execucao na linha 11: a funcao 'sinal' terminou sem executar 'retorne'
+programa Teste {
+    funcao sinal(n: inteiro): texto {
+        se (n > 0) {
+            retorne "positivo";
+        } senao se (n < 0) {
+            retorne "negativo";
+        }
+    }
+    inicio {
+        escreva(sinal(0));
+    }
+}
+

@@ -1,0 +1,39 @@
+/*
+ * EXERCÍCIO 03 - Média e decisão
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Um aluno tirou as notas 6.5, 8 e 7.5. Calcule a média e diga se ele
+ *   foi aprovado (média >= 7), está de recuperação (média >= 5) ou foi
+ *   reprovado.
+ *
+ * Conceitos: tipo real, uso do resultado de uma conta em outra,
+ *            se / senao se / senao.
+ */
+
+programa MediaAluno {
+    inicio {
+        seja nota1: real = 6.5;
+        seja nota2: real = 8;        // o inteiro 8 vira 8.0 automaticamente
+        seja nota3: real = 7.5;
+
+        seja soma: real = nota1 + nota2 + nota3;
+        seja media: real = soma / 3;   // usa o resultado da soma
+
+        escreva("Notas:", nota1, nota2, nota3);
+        escreva("Media:", media);
+
+        // apenas o PRIMEIRO caso verdadeiro é executado
+        se (media >= 7) {
+            escreva("Situacao: aprovado");
+        } senao se (media >= 5) {
+            escreva("Situacao: recuperacao");
+        } senao {
+            escreva("Situacao: reprovado");
+        }
+    }
+}
+
+// SAIDA ESPERADA:
+// > Notas: 6.5 8.0 7.5
+// > Media: 7.333333333
+// > Situacao: aprovado

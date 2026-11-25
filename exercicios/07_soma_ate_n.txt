@@ -1,0 +1,38 @@
+/*
+ * EXERCÍCIO 07 - Soma de 1 até N
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Some todos os números de 1 até 100 usando "enquanto". Depois
+ *   confira o resultado com a fórmula de Gauss: n * (n + 1) / 2.
+ *
+ * Conceitos: repetição "enquanto", acumulador, comparação que gera
+ *            um valor logico.
+ */
+
+programa SomaAteN {
+    inicio {
+        seja n: inteiro = 100;
+        seja contador: inteiro = 1;
+        seja soma: inteiro = 0;          // acumulador começa em zero
+
+        // repete enquanto a condição for verdadeira
+        enquanto (contador <= n) {
+            soma = soma + contador;      // acumula
+            contador = contador + 1;     // sem isso o laço nunca terminaria
+        }
+
+        seja formula: inteiro = n * (n + 1) / 2;
+
+        escreva("Soma com enquanto:", soma);
+        escreva("Soma com a formula:", formula);
+
+        // uma comparação produz verdadeiro ou falso
+        seja iguais: logico = soma == formula;
+        escreva("Os dois metodos concordam?", iguais);
+    }
+}
+
+// SAIDA ESPERADA:
+// > Soma com enquanto: 5050
+// > Soma com a formula: 5050
+// > Os dois metodos concordam? verdadeiro

@@ -1,0 +1,33 @@
+/*
+ * EXERCÍCIO 08 - Conversão de temperatura
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Crie uma função que converte graus Celsius para Fahrenheit
+ *   (F = C * 9 / 5 + 32) e mostre a conversão de 0 a 100 graus,
+ *   de 25 em 25.
+ *
+ * Conceitos: função com parâmetro e retorno real, "para" com passo.
+ */
+
+programa Temperaturas {
+
+    funcao fahrenheit(celsius: real): real {
+        retorne celsius * 9 / 5 + 32;
+    }
+
+    inicio {
+        seja c: real;
+
+        // "passo 25" faz a variável pular de 25 em 25
+        para c de 0 ate 100 passo 25 {
+            escreva(c, "C =", fahrenheit(c), "F");
+        }
+    }
+}
+
+// SAIDA ESPERADA:
+// > 0.0 C = 32.0 F
+// > 25.0 C = 77.0 F
+// > 50.0 C = 122.0 F
+// > 75.0 C = 167.0 F
+// > 100.0 C = 212.0 F

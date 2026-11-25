@@ -1,0 +1,62 @@
+/*
+ * EXERCÍCIO 10 - Lendo dados do teclado (IMC)
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Leia o peso (kg) e a altura (m) de uma pessoa, calcule o
+ *   IMC = peso / altura ^ 2 e mostre a classificação:
+ *     menor que 18.5 -> abaixo do peso
+ *     menor que 25   -> peso normal
+ *     menor que 30   -> sobrepeso
+ *     senão          -> obesidade
+ *
+ * Como executar (digite os valores quando o programa parar):
+ *     ./aurora exercicios/10_imc_com_leitura.txt
+ *
+ *   (nos testes automaticos os valores vem das linhas "// <" do final)
+ *
+ * Conceitos: comando leia, potência, se / senao se encadeados.
+ */
+
+programa Imc {
+
+    // função que devolve um texto com a classificação
+    funcao classificar(imc: real): texto {
+        se (imc < 18.5) {
+            retorne "abaixo do peso";
+        } senao se (imc < 25) {
+            retorne "peso normal";
+        } senao se (imc < 30) {
+            retorne "sobrepeso";
+        } senao {
+            retorne "obesidade";
+        }
+    }
+
+    inicio {
+        seja peso: real;
+        seja altura: real;
+
+        escreva("Digite o peso em kg:");
+        leia(peso);                       // espera o usuário digitar um número
+        escreva("Digite a altura em metros:");
+        leia(altura);
+
+        seja imc: real = peso / altura ^ 2;   // ^ é calculado antes de /
+
+        escreva("Peso:", peso, "kg");
+        escreva("Altura:", altura, "m");
+        escreva("IMC:", imc);
+        escreva("Classificacao:", classificar(imc));
+    }
+}
+
+// SAIDA ESPERADA (com 70 e 1.75 digitados):
+// > Digite o peso em kg:
+// > Digite a altura em metros:
+// > Peso: 70.0 kg
+// > Altura: 1.75 m
+// > IMC: 22.85714286
+// > Classificacao: peso normal
+// Valores digitados:
+// < 70
+// < 1.75

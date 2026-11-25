@@ -1,0 +1,297 @@
+/*
+ * ============================================================================
+ *  codigo_para_executar.txt - Programa de demonstração da linguagem Aurora
+ * ============================================================================
+ *
+ *  Este programa mostra todos os recursos da linguagem:
+ *    1. declaração e uso de variáveis (com tipos)
+ *    2. atribuição de valores
+ *    3. operações matemáticas e uso dos resultados em outras operações
+ *    4. funções (com e sem retorno, inclusive recursivas)
+ *    5. estruturas de decisão (se / senao se / senao)
+ *    6. estruturas de repetição (para / enquanto)
+ *
+ *  Executar:  ./aurora codigo_para_executar.txt          (Linux)
+ *             aurora.exe codigo_para_executar.txt        (Windows)
+ * ============================================================================
+ */
+
+// Comentários:  "//" comenta até o fim da linha;
+//               "/*" abre e "*/" fecha um comentário de várias linhas
+//               (como o cabeçalho acima).
+
+// Todo programa começa com "programa <Nome> {" e termina com "}".
+// Dentro dele vêm primeiro as funções (opcionais) e depois o bloco "inicio".
+programa Demonstracao {
+
+    // =======================================================================
+    //  FUNÇÕES
+    //  Forma geral:  funcao nome(parametro: tipo, ...): tipo_de_retorno { ... }
+    //  O tipo de retorno é opcional. Sem ele, a função não devolve valor.
+    // =======================================================================
+
+    // Função SEM retorno: só escreve um título na tela.
+    // O parâmetro "nome" é do tipo texto.
+    funcao titulo(nome: texto) {
+        escreva("");                              // escreve uma linha em branco
+        escreva("==========", nome, "==========");  // valores separados por vírgula
+    }
+
+    // Função RECURSIVA (chama a si mesma): n! = n * (n-1)!
+    // ": inteiro" depois dos parênteses indica que ela devolve um inteiro.
+    funcao fatorial(n: inteiro): inteiro {
+        se (n <= 1) {
+            retorne 1;                  // caso base: 0! = 1! = 1
+        }
+        retorne n * fatorial(n - 1);    // usa o resultado da própria função
+    }
+
+    // Máximo divisor comum pelo algoritmo de Euclides.
+    // Parâmetros funcionam como variáveis locais e podem ser alterados.
+    funcao mdc(a: inteiro, b: inteiro): inteiro {
+        enquanto (b != 0) {
+            seja resto: inteiro = a % b;   // % = resto da divisão
+            a = b;
+            b = resto;
+        }
+        retorne a;
+    }
+
+    // Média de três notas. Os parâmetros são reais, mas a função aceita
+    // inteiros: eles são convertidos automaticamente para real.
+    funcao media(n1: real, n2: real, n3: real): real {
+        retorne (n1 + n2 + n3) / 3;
+    }
+
+    // Função que devolve um TEXTO, usando "se / senao se / senao".
+    funcao situacao(m: real): texto {
+        se (m >= 7) {
+            retorne "aprovado";
+        } senao se (m >= 5) {
+            retorne "recuperacao";
+        } senao {
+            retorne "reprovado";
+        }
+    }
+
+    // Função que devolve um valor LOGICO (verdadeiro ou falso).
+    funcao eh_primo(n: inteiro): logico {
+        se (n < 2) {
+            retorne falso;               // 0 e 1 não são primos
+        }
+        seja divisor: inteiro = 2;
+        // basta testar divisores até a raiz quadrada de n
+        enquanto (divisor * divisor <= n) {
+            se (n % divisor == 0) {
+                retorne falso;           // achou um divisor: não é primo
+            }
+            divisor = divisor + 1;
+        }
+        retorne verdadeiro;
+    }
+
+    // =======================================================================
+    //  PROGRAMA PRINCIPAL
+    //  A execução sempre começa pelo bloco "inicio".
+    // =======================================================================
+    inicio {
+
+        // -------------------------------------------------------------------
+        //  1. VARIÁVEIS E OPERAÇÕES MATEMÁTICAS
+        // -------------------------------------------------------------------
+        titulo("Variaveis e operacoes");     // chamada de função sem retorno
+
+        // Declaração:  seja <nome>: <tipo> = <valor inicial>;
+        seja a: inteiro = 17;
+        seja b: inteiro = 5;
+        seja soma: inteiro = a + b;          // o valor inicial pode ser uma conta
+
+        escreva("a =", a, "e b =", b);
+        escreva("a + b =", soma);
+        escreva("a - b =", a - b);
+        escreva("a * b =", a * b);
+        escreva("a / b =", a / b, "(divisao inteira)");   // inteiro / inteiro = inteiro
+        escreva("a % b =", a % b);                          // resto da divisão
+        escreva("a / 2.0 =", a / 2.0, "(divisao real)");   // com um real, o resultado é real
+        escreva("2 ^ 10 =", 2 ^ 10);                        // potência (resultado sempre real)
+
+        // Usando o resultado de uma operação em outras operações
+        seja dobro_da_soma: inteiro = soma * 2;
+        // parênteses mudam a ordem; "-4" é um número negativo
+        seja expressao: inteiro = (dobro_da_soma - b) * 3 + -4;
+        escreva("dobro da soma =", dobro_da_soma);
+        escreva("(dobro_da_soma - b) * 3 + -4 =", expressao);
+
+        // Variáveis reais (números com casas decimais usam ponto)
+        seja raio: real = 2.5;
+        seja pi: real = 3.14159;
+        seja area: real = pi * raio ^ 2;     // ^ é calculado antes de *
+        escreva("area do circulo de raio", raio, "=", area);
+
+        // Atribuição: troca o valor de uma variável que já existe
+        a = a + 1;
+        escreva("depois de a = a + 1, a vale", a);
+
+        // -------------------------------------------------------------------
+        //  2. FUNÇÕES
+        // -------------------------------------------------------------------
+        titulo("Funcoes");
+        escreva("5! =", fatorial(5));        // o resultado de uma função pode
+        escreva("10! =", fatorial(10));      // ir direto para o escreva
+        escreva("mdc(84, 36) =", mdc(84, 36));
+
+        // o resultado também pode ser guardado em uma variável...
+        seja nota_final: real = media(8.5, 6, 7);
+        // ...e passado para outra função
+        escreva("media(8.5, 6, 7) =", nota_final, "->", situacao(nota_final));
+        escreva("media(4, 5, 3) =", media(4, 5, 3), "->", situacao(media(4, 5, 3)));
+
+        // -------------------------------------------------------------------
+        //  3. DECISÃO
+        // -------------------------------------------------------------------
+        titulo("Decisao");
+        seja temperatura: real = 31.5;
+
+        // A condição fica entre parênteses e o bloco entre chaves.
+        // Só o primeiro caso verdadeiro é executado.
+        se (temperatura > 30) {
+            escreva(temperatura, "graus: dia quente");
+        } senao se (temperatura > 18) {
+            escreva(temperatura, "graus: dia agradavel");
+        } senao {
+            escreva(temperatura, "graus: dia frio");
+        }
+
+        // Uma comparação produz um valor logico, que pode ser guardado
+        seja par: logico = a % 2 == 0;
+        escreva("a =", a, "e par?", par);
+
+        // Operadores lógicos: e, ou, nao
+        se (par e a > 10) {
+            escreva("a e par e maior que 10");
+        }
+        se (nao (a == 0) ou falso) {
+            escreva("a e diferente de zero");
+        }
+
+        // -------------------------------------------------------------------
+        //  4. REPETIÇÃO
+        // -------------------------------------------------------------------
+        titulo("Repeticao");
+
+        // "para" precisa de uma variável numérica já declarada
+        seja i: inteiro;                     // sem valor inicial: começa em 0
+        para i de 1 ate 5 {                  // i = 1, 2, 3, 4, 5
+            escreva("quadrado de", i, "=", i * i);
+        }
+
+        escreva("contagem regressiva de 2 em 2:");
+        para i de 10 ate 0 passo -2 {        // passo negativo conta para baixo
+            escreva("  ", i);
+        }
+
+        escreva("numeros primos ate 30:");
+        para i de 1 ate 30 {
+            se (eh_primo(i)) {               // função logica usada como condição
+                escreva("  ", i);
+            }
+        }
+
+        // "enquanto" repete enquanto a condição for verdadeira
+        escreva("sequencia de Fibonacci menor que 100:");
+        seja anterior: inteiro = 0;
+        seja atual: inteiro = 1;
+        enquanto (atual < 100) {
+            escreva("  ", atual);
+            seja proximo: inteiro = anterior + atual;   // existe só dentro deste bloco
+            anterior = atual;
+            atual = proximo;
+        }
+
+        // "para" também funciona com variável real e passo decimal
+        seja x: real;
+        para x de 0 ate 1 passo 0.25 {
+            escreva("x =", x, "-> x ^ 2 =", x ^ 2);
+        }
+
+        titulo("Fim");
+    }
+}
+
+/*
+ * ----------------------------------------------------------------------------
+ *  SAIDA ESPERADA
+ *  (usada pelo script de testes: cada linha "// >" abaixo e uma linha da saida)
+ * ----------------------------------------------------------------------------
+ */
+// >
+// > ========== Variaveis e operacoes ==========
+// > a = 17 e b = 5
+// > a + b = 22
+// > a - b = 12
+// > a * b = 85
+// > a / b = 3 (divisao inteira)
+// > a % b = 2
+// > a / 2.0 = 8.5 (divisao real)
+// > 2 ^ 10 = 1024.0
+// > dobro da soma = 44
+// > (dobro_da_soma - b) * 3 + -4 = 113
+// > area do circulo de raio 2.5 = 19.6349375
+// > depois de a = a + 1, a vale 18
+// >
+// > ========== Funcoes ==========
+// > 5! = 120
+// > 10! = 3628800
+// > mdc(84, 36) = 12
+// > media(8.5, 6, 7) = 7.166666667 -> aprovado
+// > media(4, 5, 3) = 4.0 -> reprovado
+// >
+// > ========== Decisao ==========
+// > 31.5 graus: dia quente
+// > a = 18 e par? verdadeiro
+// > a e par e maior que 10
+// > a e diferente de zero
+// >
+// > ========== Repeticao ==========
+// > quadrado de 1 = 1
+// > quadrado de 2 = 4
+// > quadrado de 3 = 9
+// > quadrado de 4 = 16
+// > quadrado de 5 = 25
+// > contagem regressiva de 2 em 2:
+// >    10
+// >    8
+// >    6
+// >    4
+// >    2
+// >    0
+// > numeros primos ate 30:
+// >    2
+// >    3
+// >    5
+// >    7
+// >    11
+// >    13
+// >    17
+// >    19
+// >    23
+// >    29
+// > sequencia de Fibonacci menor que 100:
+// >    1
+// >    1
+// >    2
+// >    3
+// >    5
+// >    8
+// >    13
+// >    21
+// >    34
+// >    55
+// >    89
+// > x = 0.0 -> x ^ 2 = 0.0
+// > x = 0.25 -> x ^ 2 = 0.0625
+// > x = 0.5 -> x ^ 2 = 0.25
+// > x = 0.75 -> x ^ 2 = 0.5625
+// > x = 1.0 -> x ^ 2 = 1.0
+// >
+// > ========== Fim ==========

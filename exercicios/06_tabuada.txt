@@ -1,0 +1,35 @@
+/*
+ * EXERCÍCIO 06 - Tabuada
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Escreva a tabuada do 7, de 7 x 1 até 7 x 10.
+ *
+ * Conceitos: repetição "para" e multiplicação.
+ */
+
+programa Tabuada {
+    inicio {
+        seja numero: inteiro = 7;
+        seja i: inteiro;
+
+        escreva("Tabuada do", numero);
+
+        // "para i de 1 ate 10" faz i valer 1, 2, 3, ..., 10
+        para i de 1 ate 10 {
+            escreva(numero, "x", i, "=", numero * i);
+        }
+    }
+}
+
+// SAIDA ESPERADA:
+// > Tabuada do 7
+// > 7 x 1 = 7
+// > 7 x 2 = 14
+// > 7 x 3 = 21
+// > 7 x 4 = 28
+// > 7 x 5 = 35
+// > 7 x 6 = 42
+// > 7 x 7 = 49
+// > 7 x 8 = 56
+// > 7 x 9 = 63
+// > 7 x 10 = 70

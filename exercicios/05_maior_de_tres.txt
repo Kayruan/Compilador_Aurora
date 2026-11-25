@@ -1,0 +1,39 @@
+/*
+ * EXERCÍCIO 05 - Primeira função
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Crie uma função "maior" que recebe três números inteiros e devolve
+ *   o maior deles. Teste com (3, 9, 4), (10, 2, 7) e (-1, -5, -3).
+ *
+ * Conceitos: declaração de função com parâmetros e tipo de retorno,
+ *            retorne, operador lógico "e", chamada de função.
+ */
+
+programa MaiorDeTres {
+
+    // As funções ficam ANTES do bloco "inicio".
+    // ": inteiro" no final diz que a função devolve um inteiro.
+    funcao maior(a: inteiro, b: inteiro, c: inteiro): inteiro {
+        se (a >= b e a >= c) {
+            retorne a;           // "retorne" encerra a função e devolve o valor
+        }
+        se (b >= c) {
+            retorne b;
+        }
+        retorne c;
+    }
+
+    inicio {
+        escreva("maior(3, 9, 4) =", maior(3, 9, 4));
+        escreva("maior(10, 2, 7) =", maior(10, 2, 7));
+
+        // o resultado da função também pode ser guardado em uma variável
+        seja resultado: inteiro = maior(-1, -5, -3);
+        escreva("maior(-1, -5, -3) =", resultado);
+    }
+}
+
+// SAIDA ESPERADA:
+// > maior(3, 9, 4) = 9
+// > maior(10, 2, 7) = 10
+// > maior(-1, -5, -3) = -1

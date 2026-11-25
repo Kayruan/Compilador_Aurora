@@ -1,0 +1,38 @@
+/*
+ * EXERCÍCIO 01 - Variáveis
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Guarde o nome e a idade de uma pessoa em variáveis. Calcule o ano
+ *   em que ela nasceu (considere o ano atual 2026) e escreva tudo.
+ *   Depois some 5 à idade e mostre a idade daqui a 5 anos.
+ *
+ * Conceitos: declaração (seja), tipos texto e inteiro, atribuição (=),
+ *            subtração e o comando escreva.
+ */
+
+programa Variaveis {
+    inicio {
+        // seja <nome>: <tipo> = <valor>;
+        seja nome: texto = "Ana";
+        seja idade: inteiro = 20;
+        seja ano_atual: inteiro = 2026;
+
+        // o valor inicial pode ser o resultado de uma conta
+        seja ano_nascimento: inteiro = ano_atual - idade;
+
+        // escreva junta os valores com um espaço entre eles
+        escreva("Ola,", nome);
+        escreva("Voce tem", idade, "anos");
+        escreva("Voce nasceu em", ano_nascimento, "ou", ano_nascimento - 1);
+
+        // atribuição: a variável recebe um novo valor
+        idade = idade + 5;
+        escreva("Daqui a 5 anos tera", idade, "anos");
+    }
+}
+
+// SAIDA ESPERADA:
+// > Ola, Ana
+// > Voce tem 20 anos
+// > Voce nasceu em 2006 ou 2005
+// > Daqui a 5 anos tera 25 anos

@@ -1,0 +1,47 @@
+/*
+ * EXERCÍCIO 02 - Operações matemáticas
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   a) Calcule a área e o perímetro de um retângulo de base 8 e altura 5.
+ *   b) Calcule a área de um triângulo de base 7 e altura 3
+ *      (área = base * altura / 2). Compare a divisão por 2 com a
+ *      divisão por 2.0 e observe a diferença.
+ *
+ * Conceitos: operadores + * /, parênteses e a diferença entre
+ *            divisão inteira (inteiro / inteiro) e divisão real.
+ */
+
+programa Areas {
+    inicio {
+        // ---- a) retângulo ----
+        seja base: inteiro = 8;
+        seja altura: inteiro = 5;
+        seja area: inteiro = base * altura;
+        seja perimetro: inteiro = 2 * (base + altura);   // parênteses primeiro
+
+        escreva("Retangulo", base, "x", altura);
+        escreva("Area:", area);
+        escreva("Perimetro:", perimetro);
+
+        // ---- b) triângulo ----
+        // reaproveitamos as variáveis já criadas, só trocando o valor
+        base = 7;
+        altura = 3;
+        escreva("Triangulo base", base, "altura", altura);
+
+        // 7 * 3 = 21; 21 / 2 com dois inteiros descarta a parte decimal
+        escreva("Area (divisao inteira):", base * altura / 2);
+
+        // com 2.0 (real) a conta inteira vira real e o resultado é exato
+        seja area_triangulo: real = base * altura / 2.0;
+        escreva("Area (divisao real):", area_triangulo);
+    }
+}
+
+// SAIDA ESPERADA:
+// > Retangulo 8 x 5
+// > Area: 40
+// > Perimetro: 26
+// > Triangulo base 7 altura 3
+// > Area (divisao inteira): 10
+// > Area (divisao real): 10.5

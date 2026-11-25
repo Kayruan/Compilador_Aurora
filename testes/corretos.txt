@@ -1,0 +1,107 @@
+/*
+ * ============================================================================
+ *  corretos.txt - Programas que devem funcionar
+ * ============================================================================
+ *
+ *  Cada caso começa com a linha  "### <nome>"  e é um programa Aurora
+ *  completo. No final de cada caso:
+ *     // > ...   linhas que o programa deve escrever (saída esperada)
+ *     // < ...   valores "digitados" no teclado para o comando leia
+ *
+ *  O script de testes separa os casos, executa cada um e compara a saída.
+ */
+
+### precedencia
+// Confere a precedencia e a associatividade dos operadores
+programa Precedencia {
+    inicio {
+        escreva(2 + 3 * 4);                     // 14: * antes de +
+        escreva((2 + 3) * 4);                   // 20: parenteses primeiro
+        escreva(10 - 4 - 3);                    // 3: - associa a esquerda
+        escreva(2 ^ 3 ^ 2);                     // 512.0: ^ associa a direita
+        escreva(-2 ^ 2);                        // -4.0: ^ antes do menos unario
+        escreva(7 / 2, 7 / 2.0);                // 3 e 3.5: divisao inteira x real
+        escreva(1 < 2 e 3 > 4 ou verdadeiro);   // verdadeiro: e antes de ou
+        escreva(nao falso e falso);             // falso: nao antes de e
+        escreva("a" == "a", 3 == 3.0);          // textos e numeros mistos
+    }
+}
+
+// Saida esperada:
+// > 14
+// > 20
+// > 3
+// > 512.0
+// > -4.0
+// > 3 3.5
+// > verdadeiro
+// > falso
+// > verdadeiro verdadeiro
+
+### escopo_recursao
+// Recursao (cada chamada tem suas proprias variaveis) e escopo de bloco
+programa Recursao {
+    funcao fibonacci(n: inteiro): inteiro {
+        se (n < 2) {
+            retorne n;
+        }
+        seja a: inteiro = fibonacci(n - 1);
+        seja b: inteiro = fibonacci(n - 2);
+        retorne a + b;
+    }
+
+    funcao potencia(base: inteiro, expoente: inteiro): inteiro {
+        se (expoente == 0) {
+            retorne 1;
+        }
+        retorne base * potencia(base, expoente - 1);
+    }
+
+    inicio {
+        escreva("fibonacci(15) =", fibonacci(15));
+        escreva("potencia(3, 4) =", potencia(3, 4));
+        seja i: inteiro;
+        para i de 1 ate 2 {
+            seja temporario: inteiro = i * 100;   // existe so dentro do bloco
+            escreva("volta", i, "temporario =", temporario);
+        }
+        seja temporario: texto = "agora e texto";  // o nome esta livre de novo
+        escreva(temporario, "(com \"aspas\" e \\barra)");
+    }
+}
+
+// Saida esperada:
+// > fibonacci(15) = 610
+// > potencia(3, 4) = 81
+// > volta 1 temporario = 100
+// > volta 2 temporario = 200
+// > agora e texto (com "aspas" e \barra)
+
+### leitura
+// Testa o comando leia com os quatro tipos (os valores digitados estao no final do caso)
+programa Leitura {
+    inicio {
+        seja nome: texto;
+        seja idade: inteiro;
+        seja altura: real;
+        seja estuda: logico;
+        leia(nome);
+        leia(idade);
+        leia(altura);
+        leia(estuda);
+        escreva(nome, "tem", idade, "anos e", altura, "m");
+        escreva("daqui a 10 anos tera", idade + 10, "anos");
+        escreva("estuda?", estuda);
+    }
+}
+
+// Saida esperada:
+// > Maria tem 21 anos e 1.68 m
+// > daqui a 10 anos tera 31 anos
+// > estuda? verdadeiro
+// Valores digitados:
+// < Maria
+// < 21
+// < 1.68
+// < verdadeiro
+

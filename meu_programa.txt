@@ -1,0 +1,21 @@
+// Meu primeiro programa em Aurora
+programa MeuPrograma {
+
+    funcao eh_bissexto(ano: inteiro): logico {
+        retorne (ano % 4 == 0 e ano % 100 != 0) ou ano % 400 == 0;
+    }
+
+    inicio {
+        seja nome: texto = "Kayruan";
+        escreva("Ola,", nome);
+
+        seja i: inteiro;
+
+        para i de 1 ate 5 {
+            escreva(i, "x 7 =", i * 7);
+        }
+
+        escreva("2024 e bissexto?", eh_bissexto(2024));
+        escreva("1900 e bissexto?", eh_bissexto(1900));
+    }
+}

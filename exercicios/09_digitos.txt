@@ -1,0 +1,44 @@
+/*
+ * EXERCÍCIO 09 - Trabalhando com dígitos
+ * ------------------------------------------------------------------
+ * Enunciado:
+ *   Dado o número 12345, mostre:
+ *     - o número invertido (54321);
+ *     - a soma dos dígitos;
+ *     - a quantidade de dígitos.
+ *
+ * Dica: numero % 10 dá o último dígito; numero / 10 remove o último
+ *       dígito (divisão inteira).
+ *
+ * Conceitos: % e / com inteiros, "enquanto", várias variáveis
+ *            sendo atualizadas na mesma repetição.
+ */
+
+programa Digitos {
+    inicio {
+        seja original: inteiro = 12345;
+        seja numero: inteiro = original;     // cópia que vamos "desmontar"
+        seja invertido: inteiro = 0;
+        seja soma: inteiro = 0;
+        seja quantidade: inteiro = 0;
+
+        enquanto (numero > 0) {
+            seja digito: inteiro = numero % 10;     // último dígito
+            invertido = invertido * 10 + digito;    // coloca o dígito no final
+            soma = soma + digito;
+            quantidade = quantidade + 1;
+            numero = numero / 10;                   // remove o último dígito
+        }
+
+        escreva("Numero original:", original);
+        escreva("Invertido:", invertido);
+        escreva("Soma dos digitos:", soma);
+        escreva("Quantidade de digitos:", quantidade);
+    }
+}
+
+// SAIDA ESPERADA:
+// > Numero original: 12345
+// > Invertido: 54321
+// > Soma dos digitos: 15
+// > Quantidade de digitos: 5
