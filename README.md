@@ -1,12 +1,50 @@
-# Linguagem Aurora
+<div align="center">
 
-Compilador e interpretador de uma linguagem de programação em português, construído
-com **Flex** (analisador léxico), **Bison** (analisador sintático) e **C**.
+# 🌅 Linguagem Aurora
 
-> Trabalho da disciplina de Compiladores — Prof. Gabriel dos Santos.
-> Aluno: Kayruan da Cruz Soares.
+**Uma linguagem de programação em português, com compilador e interpretador
+construídos do zero com Flex, Bison e C.**
 
-## Sumário
+[![Testes](https://github.com/Kayruan/Compilador_Aurora/actions/workflows/testes.yml/badge.svg)](https://github.com/Kayruan/Compilador_Aurora/actions/workflows/testes.yml)
+![Linguagem C](https://img.shields.io/badge/C-gnu11-00599C?logo=c&logoColor=white)
+![Flex](https://img.shields.io/badge/Flex-2.6-informational)
+![Bison](https://img.shields.io/badge/Bison-3.8-informational)
+![Plataformas](https://img.shields.io/badge/plataformas-Linux%20%7C%20Windows-lightgrey)
+
+[Início rápido](#-início-rápido) •
+[A linguagem](#1-exemplo-rápido) •
+[Como funciona](#3-visão-geral-do-compilador) •
+[Testes](#11-testes) •
+[Documentação em PDF](docs/Documentacao_Linguagem_Aurora.pdf)
+
+</div>
+
+---
+
+## ✨ Destaques
+
+- 🇧🇷 **Sintaxe em português** — `programa`, `seja`, `se`/`senao`, `enquanto`, `para`, `funcao`, `retorne`.
+- 🔤 **Tipagem estática** — `inteiro`, `real`, `logico` e `texto`, com conversão automática de `inteiro` para `real`.
+- 🧩 **Funções com recursão**, parâmetros tipados e valor de retorno.
+- 📦 **Escopo de bloco** e tabela de símbolos por função.
+- 🌳 **Árvore sintática visível** com a opção `--arvore`.
+- 🚨 **Mensagens de erro claras**, com a fase (léxica, sintática, semântica ou execução) e a linha.
+- ✅ **Gramática LALR(1) sem conflitos** e **33 testes automáticos** rodando no CI.
+
+## 🚀 Início rápido
+
+```sh
+git clone https://github.com/Kayruan/Compilador_Aurora.git
+cd Compilador_Aurora
+
+make                                         # Linux: gera e compila
+./aurora exemplos/codigo_para_executar.txt   # executa um programa
+```
+
+No Windows, com WinFlexBison e gcc instalados, basta rodar `compilar.bat`
+(detalhes na [seção 2](#2-como-compilar-e-executar)).
+
+## 📚 Sumário
 
 1. [Exemplo rápido](#1-exemplo-rápido)
 2. [Como compilar e executar](#2-como-compilar-e-executar)
@@ -20,16 +58,6 @@ com **Flex** (analisador léxico), **Bison** (analisador sintático) e **C**.
 10. [Mensagens de erro](#10-mensagens-de-erro)
 11. [Testes](#11-testes)
 12. [Limitações conhecidas](#12-limitações-conhecidas)
-
-A Aurora é uma linguagem estruturada, com tipos, inspirada no português:
-
-- tem início e fim de programa bem definidos (`programa Nome { ... }`);
-- variáveis têm tipo (`inteiro`, `real`, `logico`, `texto`) e escopo de bloco;
-- tem operações matemáticas, relacionais e lógicas com precedência;
-- tem decisão (`se` / `senao se` / `senao`) e repetição (`enquanto`, `para`);
-- tem funções com parâmetros, valor de retorno e recursão;
-- tem entrada (`leia`) e saída (`escreva`);
-- o compilador verifica os tipos e mostra mensagens de erro claras, com o número da linha.
 
 ---
 
@@ -128,32 +156,17 @@ aurora --arvore <arquivo>    mostra a árvore sintática antes de executar
 
 O código-fonte passa por quatro etapas:
 
-```
- código-fonte (.txt)
-        │
-        ▼
- ┌──────────────────────┐
- │ 1. Análise LÉXICA    │  lexico.l (Flex)
- │   texto → tokens     │  ignora espaços e comentários
- └──────────────────────┘
-        │  tokens: SEJA ID ':' TIPO_INTEIRO '=' LIT_INTEIRO ';' ...
-        ▼
- ┌──────────────────────┐
- │ 2. Análise SINTÁTICA │  sintatico.y (Bison)
- │   tokens → árvore    │  confere a gramática e monta a árvore
- └──────────────────────┘
-        │  cada regra reconhecida chama o módulo semântico
-        ▼
- ┌──────────────────────┐
- │ 3. Análise SEMÂNTICA │  semantico.c + tabela.c
- │   confere significado│  declarações, tipos, escopos, argumentos
- └──────────────────────┘
-        │  árvore completa e com os tipos verificados
-        ▼
- ┌──────────────────────┐
- │ 4. INTERPRETAÇÃO     │  interpretador.c
- │   executa a árvore   │  calcula expressões e executa comandos
- └──────────────────────┘
+```mermaid
+flowchart TD
+    A["📄 Código-fonte (.txt)"] --> B
+    B["<b>1. Análise léxica</b><br/>lexico.l (Flex)<br/>texto → tokens"]
+    B -->|"tokens: SEJA, ID, TIPO_INTEIRO, ..."| C
+    C["<b>2. Análise sintática</b><br/>sintatico.y (Bison)<br/>tokens → árvore"]
+    C <-->|"cada regra reconhecida"| D
+    D["<b>3. Análise semântica</b><br/>semantico.c + tabela.c<br/>tipos, escopos, declarações"]
+    C -->|"árvore completa e com tipos verificados"| E
+    E["<b>4. Interpretação</b><br/>interpretador.c<br/>executa a árvore"]
+    E --> F["🖥️ Saída do programa"]
 ```
 
 As etapas 2 e 3 acontecem **juntas**. Quando o Bison reconhece uma regra (por
@@ -169,9 +182,9 @@ impede a execução da linha 1.
 ```
 .
 ├── README.md                   esta documentação
-├── LEIA-ME.txt                 resumo da entrega e de como compilar
 ├── Makefile                    compilação no Linux
 ├── compilar.bat                compilação no Windows
+├── .github/workflows/          CI: compila e roda os testes a cada push
 │
 ├── src/                        código escrito à mão
 │   ├── lexico.l                  Flex: analisador léxico
@@ -561,6 +574,11 @@ Todos os testes passaram em:
 Os arquivos gerados no Windows (`lex.yy.c`, `sintatico.tab.c`, `sintatico.tab.h`)
 também compilam sem alterações no Linux.
 
+**Integração contínua:** a cada push, o GitHub Actions
+([`.github/workflows/testes.yml`](.github/workflows/testes.yml)) instala o Flex e
+o Bison, compila com `make` e roda `make testar` no Ubuntu. O resultado aparece
+no badge do topo desta página.
+
 ---
 
 ## 12. Limitações conhecidas
@@ -571,3 +589,13 @@ também compilam sem alterações no Linux.
 - A memória da árvore não é liberada no fim. O sistema operacional a recupera
   quando o programa termina.
 - O limite de chamadas aninhadas é 2000, para evitar estouro de pilha.
+
+---
+
+## 👤 Autor
+
+Desenvolvido por **Kayruan da Cruz Soares** como trabalho da disciplina de
+**Compiladores**, orientado pelo Prof. Gabriel dos Santos.
+
+O enunciado original está em [`docs/Trabalho de Compiladores.pdf`](docs/Trabalho%20de%20Compiladores.pdf),
+e o roteiro usado na apresentação, em [`docs/APRESENTACAO.md`](docs/APRESENTACAO.md).
