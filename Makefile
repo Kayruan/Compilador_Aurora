@@ -3,7 +3,7 @@
 # ============================================================================
 #
 #  make              compila tudo (gera o executável ./aurora)
-#  make executar     compila e roda codigo_para_executar.txt
+#  make executar     compila e roda exemplos/codigo_para_executar.txt
 #  make arvore       roda o exemplo mostrando a árvore sintática
 #  make testar       roda os testes automáticos
 #  make limpar       apaga o executável
@@ -18,6 +18,7 @@ BISON  = bison
 FLEX   = flex
 
 EXECUTAVEL = aurora
+EXEMPLO    = exemplos/codigo_para_executar.txt
 
 # Arquivos escritos à mão (pasta src/)
 FONTES  = src/main.c src/ast.c src/tabela.c src/semantico.c src/interpretador.c
@@ -42,10 +43,10 @@ $(EXECUTAVEL): $(GERADOS) $(FONTES) src/aurora.h
 	$(CC) $(CFLAGS) -o $(EXECUTAVEL) $(GERADOS) $(FONTES) -lm
 
 executar: $(EXECUTAVEL)
-	./$(EXECUTAVEL) codigo_para_executar.txt
+	./$(EXECUTAVEL) $(EXEMPLO)
 
 arvore: $(EXECUTAVEL)
-	./$(EXECUTAVEL) --arvore codigo_para_executar.txt
+	./$(EXECUTAVEL) --arvore $(EXEMPLO)
 
 testar: $(EXECUTAVEL)
 	sh testes/testar.sh ./$(EXECUTAVEL)
@@ -54,6 +55,6 @@ limpar:
 	rm -f $(EXECUTAVEL) $(EXECUTAVEL).exe
 
 limpar-tudo: limpar
-	rm -f $(GERADOS) gerados/sintatico.tab.h
+	rm -rf gerados
 
 .PHONY: all executar arvore testar limpar limpar-tudo

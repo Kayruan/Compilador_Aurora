@@ -3,7 +3,7 @@ REM ===========================================================================
 REM  compilar.bat - Compila a linguagem Aurora no Windows
 REM  Requisitos: WinFlexBison (win_flex / win_bison) e gcc (MinGW)
 REM
-REM  compilar.bat          compila e executa codigo_para_executar.txt
+REM  compilar.bat          compila e executa exemplos\codigo_para_executar.txt
 REM  compilar.bat testar   compila e roda os testes automaticos
 REM ===========================================================================
 
@@ -40,17 +40,21 @@ if /i "%~1"=="testar" (
     echo.
     powershell -NoProfile -ExecutionPolicy Bypass -File testes\testar.ps1
 ) else (
-    echo Compilado com sucesso. Executando codigo_para_executar.txt:
+    echo Compilado com sucesso. Executando exemplos\codigo_para_executar.txt:
     echo.
-    .\aurora.exe codigo_para_executar.txt
+    .\aurora.exe exemplos\codigo_para_executar.txt
 )
+REM Guarda o resultado dos testes/do exemplo para devolver no final
+set RESULTADO=%ERRORLEVEL%
 goto fim
 
 :erro
 echo Falha na compilacao.
+set RESULTADO=1
 
 :fim
 REM Quando aberto com dois cliques, espera uma tecla antes de fechar a janela.
 REM (o Explorer chama  cmd /c ""arquivo.bat" "  -> procura o trecho  " "  final;
 REM  pelo terminal, PowerShell ou VS Code, nao ha pausa)
-echo %cmdcmdline% | find """ """ >/dev/null && if not defined SEM_PAUSA pause
+echo %cmdcmdline% | find """ """ >nul && if not defined SEM_PAUSA pause
+exit /b %RESULTADO%

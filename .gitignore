@@ -1,3 +1,14 @@
+# Executáveis e objetos gerados pela compilação
+/aurora
 *.exe
 *.o
+
+# Arquivos produzidos pelo Flex e pelo Bison (recriados pelo make / compilar.bat)
 gerados/
+
+# Editores e sistema operacional
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

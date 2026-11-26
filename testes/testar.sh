@@ -7,7 +7,7 @@
 #                                    ou:  sh testes/testar.sh [executavel]
 #
 #  O que é testado:
-#   1. codigo_para_executar.txt e testes/corretos.txt
+#   1. exemplos/codigo_para_executar.txt e testes/corretos.txt
 #        -> a saída de cada programa deve ser igual às suas linhas "// > ..."
 #           (linhas "// < ..." são usadas como valores digitados no teclado)
 #   2. testes/erros.txt
@@ -81,7 +81,7 @@ obtido:   $SAIDA (codigo $CODIGO)"
 }
 
 echo "== Programas corretos =="
-testar_correto codigo_para_executar.txt "codigo_para_executar.txt"
+testar_correto exemplos/codigo_para_executar.txt "exemplos/codigo_para_executar.txt"
 separar testes/corretos.txt "$TEMP/corretos"
 for caso in "$TEMP"/corretos/*.txt; do
     nome=$(basename "$caso" .txt)

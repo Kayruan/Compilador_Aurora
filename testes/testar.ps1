@@ -5,7 +5,7 @@
 #  Uso (na pasta principal do projeto):   compilar.bat testar
 #
 #  Faz as mesmas verificacoes do testar.sh (versao Linux):
-#   1. codigo_para_executar.txt e testes\corretos.txt
+#   1. exemplos\codigo_para_executar.txt e testes\corretos.txt
 #        -> a saida de cada programa deve ser igual as suas linhas "// > ..."
 #           (linhas "// < ..." sao usadas como valores digitados no teclado)
 #   2. testes\erros.txt
@@ -90,7 +90,7 @@ function TestarErro([string]$programa, [string]$nome) {
 }
 
 Write-Host "== Programas corretos =="
-TestarCorreto "codigo_para_executar.txt" "codigo_para_executar.txt"
+TestarCorreto "exemplos\codigo_para_executar.txt" "exemplos\codigo_para_executar.txt"
 foreach ($caso in Separar "testes\corretos.txt") {
     TestarCorreto $caso.Caminho ("corretos.txt: " + $caso.Nome)
 }
