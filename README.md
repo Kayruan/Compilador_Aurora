@@ -10,6 +10,7 @@ construídos do zero com Flex, Bison e C.**
 ![Flex](https://img.shields.io/badge/Flex-2.6-informational)
 ![Bison](https://img.shields.io/badge/Bison-3.8-informational)
 ![Plataformas](https://img.shields.io/badge/plataformas-Linux%20%7C%20Windows-lightgrey)
+[![Licença: MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-green)](LICENSE)
 
 [Início rápido](#-início-rápido) •
 [A linguagem](#1-exemplo-rápido) •
@@ -182,6 +183,7 @@ impede a execução da linha 1.
 ```
 .
 ├── README.md                   esta documentação
+├── LICENSE                     licença MIT
 ├── Makefile                    compilação no Linux
 ├── compilar.bat                compilação no Windows
 ├── .github/workflows/          CI: compila e roda os testes a cada push
@@ -599,3 +601,8 @@ Desenvolvido por **Kayruan da Cruz Soares** como trabalho da disciplina de
 
 O enunciado original está em [`docs/Trabalho de Compiladores.pdf`](docs/Trabalho%20de%20Compiladores.pdf),
 e o roteiro usado na apresentação, em [`docs/APRESENTACAO.md`](docs/APRESENTACAO.md).
+
+## 📄 Licença
+
+Distribuído sob a licença **MIT**. Veja o arquivo [`LICENSE`](LICENSE) para mais
+detalhes.
