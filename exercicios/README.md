@@ -1,6 +1,6 @@
 # Exercícios resolvidos da linguagem Aurora
 
-Material de estudo. Esta pasta **não vai no zip** da entrega.
+Material de estudo complementar (não faz parte dos itens obrigatórios da entrega).
 
 Os 10 exercícios estão em ordem de dificuldade. Cada arquivo traz o enunciado, a
 solução comentada linha a linha e, no final, a saída esperada (linhas `// > `).
@@ -28,7 +28,9 @@ aurora.exe exercicios\06_tabuada.txt          Windows
 ```
 
 Os testes automáticos (`make testar` ou `compilar.bat testar`) também conferem
-todos os exercícios enquanto esta pasta existir.
+todos os exercícios desta pasta. Por isso, todo arquivo `.txt` colocado aqui precisa
+ter as linhas `// > ` com a saída esperada; rascunhos e programas livres ficam em
+[`../exemplos/`](../exemplos/).
 
 ## Ideias para praticar sozinho
 

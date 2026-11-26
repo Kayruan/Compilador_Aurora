@@ -1,0 +1,34 @@
+// ============================================================================
+//  pares_e_impares.txt - Classifica os números de 1 a 100 em pares e ímpares
+// ============================================================================
+//
+//  Recursos usados: laço "para", operador resto (%), "se / senao" e contadores.
+//
+//  Executar (na pasta principal do projeto):
+//      aurora.exe exemplos\pares_e_impares.txt      Windows
+//      ./aurora exemplos/pares_e_impares.txt        Linux
+// ============================================================================
+
+programa ParesEImpares {
+
+    inicio {
+        seja n: inteiro;
+        seja pares: inteiro = 0;
+        seja impares: inteiro = 0;
+
+        para n de 1 ate 100 {
+            // Um número é par quando o resto da divisão por 2 é zero
+            se (n % 2 == 0) {
+                escreva(n, "e par");
+                pares = pares + 1;
+            } senao {
+                escreva(n, "e impar");
+                impares = impares + 1;
+            }
+        }
+
+        escreva("");
+        escreva("total de pares:", pares);
+        escreva("total de impares:", impares);
+    }
+}

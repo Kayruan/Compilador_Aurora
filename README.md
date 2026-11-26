@@ -1,8 +1,27 @@
-# Linguagem Aurora: como funciona
+# Linguagem Aurora
 
-Trabalho de Compiladores. A linguagem **Aurora** foi criada com **Flex** (analisador
-léxico) e **Bison** (analisador sintático). É uma linguagem estruturada, com tipos,
-inspirada no português:
+Compilador e interpretador de uma linguagem de programação em português, construído
+com **Flex** (analisador léxico), **Bison** (analisador sintático) e **C**.
+
+> Trabalho da disciplina de Compiladores — Prof. Gabriel dos Santos.
+> Aluno: Kayruan da Cruz Soares.
+
+## Sumário
+
+1. [Exemplo rápido](#1-exemplo-rápido)
+2. [Como compilar e executar](#2-como-compilar-e-executar)
+3. [Visão geral do compilador](#3-visão-geral-do-compilador)
+4. [Organização dos arquivos](#4-organização-dos-arquivos)
+5. [Análise léxica](#5-análise-léxica-lexicol)
+6. [Análise sintática](#6-análise-sintática-sintaticoy)
+7. [Árvore sintática](#7-árvore-sintática-astc)
+8. [Análise semântica](#8-análise-semântica-semanticoc-e-tabelac)
+9. [Execução](#9-execução-interpretadorc)
+10. [Mensagens de erro](#10-mensagens-de-erro)
+11. [Testes](#11-testes)
+12. [Limitações conhecidas](#12-limitações-conhecidas)
+
+A Aurora é uma linguagem estruturada, com tipos, inspirada no português:
 
 - tem início e fim de programa bem definidos (`programa Nome { ... }`);
 - variáveis têm tipo (`inteiro`, `real`, `logico`, `texto`) e escopo de bloco;
@@ -54,18 +73,20 @@ media = 11.0
 
 ```sh
 make                 # roda bison, flex e gcc
-make executar        # executa codigo_para_executar.txt
+make executar        # executa exemplos/codigo_para_executar.txt
 make arvore          # executa mostrando a árvore sintática
 make testar          # roda os testes automáticos
+make limpar-tudo     # apaga o executável e a pasta gerados/
 ```
 
 Sem o Makefile, os comandos são estes:
 
 ```sh
+mkdir -p gerados
 bison -d -o gerados/sintatico.tab.c src/sintatico.y   # gera sintatico.tab.c e .tab.h
 flex -o gerados/lex.yy.c src/lexico.l                 # gera lex.yy.c
 gcc -Isrc -Igerados -o aurora gerados/*.c src/*.c -lm
-./aurora codigo_para_executar.txt
+./aurora exemplos/codigo_para_executar.txt
 ```
 
 Pacotes necessários no Ubuntu/Debian: `sudo apt install flex bison gcc make`.
@@ -80,9 +101,15 @@ compilar.bat testar          gera os arquivos, compila e roda os testes
 aurora.exe <arquivo>         executa qualquer programa Aurora
 ```
 
-### Sem Flex e Bison instalados
+> **Instalação no Windows (via winget):**
+> `winget install WinFlexBison.win_flex_bison` e `winget install BrechtSanders.WinLibs.POSIX.UCRT`.
+> O `compilar.bat` encontra automaticamente o WinFlexBison instalado pelo winget.
 
-Os arquivos da pasta `gerados/` já vêm prontos. Então dá para compilar só com o gcc:
+### Recompilar só com o gcc
+
+A pasta `gerados/` **não é versionada**: ela é criada pelo `make` ou pelo
+`compilar.bat`. Depois de gerada uma vez, alterações nos arquivos `.c` podem ser
+recompiladas só com o gcc:
 
 ```sh
 gcc -Isrc -Igerados -o aurora gerados/*.c src/*.c -lm
@@ -140,10 +167,9 @@ impede a execução da linha 1.
 ## 4. Organização dos arquivos
 
 ```
-Trabalho_Compiladores_Aurora/
+.
+├── README.md                   esta documentação
 ├── LEIA-ME.txt                 resumo da entrega e de como compilar
-├── Documentacao_Linguagem_Aurora.pdf   esta documentação
-├── codigo_para_executar.txt    programa de demonstração (comentado)
 ├── Makefile                    compilação no Linux
 ├── compilar.bat                compilação no Windows
 │
@@ -157,16 +183,29 @@ Trabalho_Compiladores_Aurora/
 │   ├── interpretador.c           execução da árvore
 │   └── main.c                    ponto de entrada e mensagens de erro
 │
-├── gerados/                    produzidos pelo Flex e pelo Bison
+├── gerados/                    produzidos pelo Flex e pelo Bison (não versionada)
 │   ├── lex.yy.c                  (flex)
 │   ├── sintatico.tab.c           (bison)
 │   └── sintatico.tab.h           (bison: códigos dos tokens)
 │
-└── testes/                     testes automáticos
-    ├── corretos.txt              programas que devem funcionar
-    ├── erros.txt                 programas com erros propositais
-    ├── testar.sh                 roda os testes no Linux
-    └── testar.ps1                roda os testes no Windows
+├── exemplos/                   programas de demonstração em Aurora
+│   ├── codigo_para_executar.txt  demonstração completa e comentada (testada)
+│   ├── meu_programa.txt          primeiro programa: funções e laços
+│   └── pares_e_impares.txt       laço para, resto (%) e contadores
+│
+├── exercicios/                 10 exercícios resolvidos, em ordem de dificuldade
+│   └── README.md                 lista dos exercícios e ideias para praticar
+│
+├── testes/                     testes automáticos
+│   ├── corretos.txt              programas que devem funcionar
+│   ├── erros.txt                 programas com erros propositais
+│   ├── testar.sh                 roda os testes no Linux
+│   └── testar.ps1                roda os testes no Windows
+│
+└── docs/
+    ├── Documentacao_Linguagem_Aurora.pdf   documentação em PDF
+    ├── Trabalho de Compiladores.pdf        enunciado do trabalho
+    └── APRESENTACAO.md                     roteiro para a apresentação
 ```
 
 | Arquivo | Papel |
@@ -180,6 +219,8 @@ Trabalho_Compiladores_Aurora/
 | `src/interpretador.c` | **Execução** da árvore. |
 | `src/main.c` | Abre o arquivo, chama o analisador e depois o interpretador. Também contém as funções de erro. |
 | `gerados/` | Arquivos produzidos pelo Bison (`sintatico.tab.c/.h`) e pelo Flex (`lex.yy.c`). Não devem ser editados à mão. |
+| `exemplos/` | Programas em Aurora para experimentar. `codigo_para_executar.txt` é o exemplo oficial da entrega. |
+| `exercicios/` | Exercícios resolvidos com a saída esperada; também são conferidos pelos testes. |
 
 Todos os arquivos de código, inclusive os programas em Aurora, estão comentados.
 
@@ -313,7 +354,7 @@ Da **menor** para a **maior** precedência (as de baixo são calculadas primeiro
 | 7 | `-` (negativo) | (unário) |
 | 8 | `^` | **direita**: `2 ^ 3 ^ 2 = 2 ^ 9` |
 
-Exemplos (todos em `testes/ok_precedencia.txt`):
+Exemplos (todos no caso `precedencia` de `testes/corretos.txt`):
 
 | Expressão | Resultado | Por quê |
 |---|---|---|
@@ -496,13 +537,14 @@ compilar.bat testar          Windows
 ```
 
 Os dois scripts (`testes/testar.sh` e `testes/testar.ps1`) fazem as mesmas
-verificações, em **23 testes**:
+verificações, em **33 testes**:
 
-- **`codigo_para_executar.txt`**: a saída do programa é comparada com as linhas
-  `// > ...` que estão no final do próprio arquivo.
+- **`exemplos/codigo_para_executar.txt`**: a saída do programa é comparada com as
+  linhas `// > ...` que estão no final do próprio arquivo.
 - **`testes/corretos.txt`**: 3 programas corretos (precedência dos operadores,
   recursão e escopo, leitura do teclado), conferidos do mesmo jeito. As linhas
   `// < ...` são os valores "digitados" para o comando `leia`.
+- **`exercicios/*.txt`**: os 10 exercícios resolvidos, conferidos do mesmo jeito.
 - **`testes/erros.txt`**: 19 programas com erros léxicos, sintáticos, semânticos
   e de execução. A primeira linha de cada um (`// espera: ...`) diz qual mensagem
   o compilador deve mostrar, e o teste confere que o programa falha com ela.

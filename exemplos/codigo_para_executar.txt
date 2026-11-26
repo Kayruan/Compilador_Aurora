@@ -11,8 +11,8 @@
  *    5. estruturas de decisão (se / senao se / senao)
  *    6. estruturas de repetição (para / enquanto)
  *
- *  Executar:  ./aurora codigo_para_executar.txt          (Linux)
- *             aurora.exe codigo_para_executar.txt        (Windows)
+ *  Executar:  ./aurora exemplos/codigo_para_executar.txt        (Linux)
+ *             aurora.exe exemplos\codigo_para_executar.txt      (Windows)
  * ============================================================================
  */
 

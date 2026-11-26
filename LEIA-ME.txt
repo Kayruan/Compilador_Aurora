@@ -4,7 +4,8 @@
   Aluno: Kayruan da Cruz Soares
 ==============================================================================
 
-A documentação completa está em  Documentacao_Linguagem_Aurora.pdf
+ Documentação completa:  README.md  e  docs/Documentacao_Linguagem_Aurora.pdf
+ Enunciado do trabalho:  docs/Trabalho de Compiladores.pdf
 
 
 ITENS DA ENTREGA (conforme o enunciado)
@@ -14,16 +15,17 @@ ITENS DA ENTREGA (conforme o enunciado)
  3. Arquivos gerados pelo Flex e Bison .... gerados/lex.yy.c
                                             gerados/sintatico.tab.c
                                             gerados/sintatico.tab.h
+                                            (criados ao compilar; veja abaixo)
  4. Demais arquivos para compilar ......... src/aurora.h e src/*.c,
                                             Makefile (Linux), compilar.bat (Windows)
- 5. Código de exemplo na linguagem ........ codigo_para_executar.txt
+ 5. Código de exemplo na linguagem ........ exemplos/codigo_para_executar.txt
 
 
 COMO COMPILAR E EXECUTAR
 ------------------------------------------------------------------------------
  Linux (requer flex, bison, gcc e make):
      make                      -> gera os arquivos e compila (./aurora)
-     make executar             -> roda codigo_para_executar.txt
+     make executar             -> roda exemplos/codigo_para_executar.txt
      make testar               -> roda os testes automáticos
 
  Windows (requer WinFlexBison e gcc/MinGW):
@@ -35,17 +37,20 @@ COMO COMPILAR E EXECUTAR
      aurora.exe <arquivo>               (Windows)
      aurora --arvore <arquivo>          mostra também a árvore sintática
 
- Os arquivos da pasta gerados/ já estão prontos; é possível compilar só com
- o gcc, sem rodar o Flex e o Bison de novo:
+ A pasta gerados/ é criada na compilação (make ou compilar.bat). Depois de
+ gerada uma vez, é possível recompilar só com o gcc:
      gcc -Isrc -Igerados -o aurora gerados/*.c src/*.c -lm
 
 
 ORGANIZAÇÃO DAS PASTAS
 ------------------------------------------------------------------------------
- src/       código escrito à mão (Flex, Bison e módulos em C, comentados)
- gerados/   arquivos produzidos pelo Flex e pelo Bison
- testes/    corretos.txt (programas que devem funcionar),
-            erros.txt (programas com erros propositais) e os scripts de teste
+ src/         código escrito à mão (Flex, Bison e módulos em C, comentados)
+ gerados/     arquivos produzidos pelo Flex e pelo Bison
+ exemplos/    programas de demonstração na linguagem Aurora
+ exercicios/  10 exercícios resolvidos e comentados (material de estudo)
+ testes/      corretos.txt (programas que devem funcionar),
+              erros.txt (programas com erros propositais) e os scripts de teste
+ docs/        documentação em PDF, enunciado e roteiro de apresentação
 
 
 EXEMPLO DA LINGUAGEM
@@ -62,11 +67,3 @@ EXEMPLO DA LINGUAGEM
  }
 
  Saída:  dobro de a = 20 e b = 2.5
-
-10. Resumo para falar na apresentação
-
-▎ "O Flex divide o código em tokens. O Bison confere se esses tokens seguem a gramática e, a cada regra reconhecida, chama a análise semântica, que verifica tipos e nomes usando a tabela de símbolos e monta a árvore sintática. Se não houver nenhum erro, o interpretador percorre essa árvore e executa o programa, criando um quadro de memória para cada chamada de função, o que permite a recursão."
-
-Para demonstrar ao vivo: .\aurora.exe --arvore exercicios\05_maior_de_tres.txt mostra funções, precedência e conversões na árvore. Depois, apague um ; ou troque um tipo para mostrar cada fase de erro.
-
-O projeto também tem o EXPLICACAO.md e o PDF da documentação, que são material escrito para entregar ou consultar.
